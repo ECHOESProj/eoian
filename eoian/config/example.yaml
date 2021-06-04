@@ -1,0 +1,19 @@
+creodias:
+    priority: 0 # Lower value means lower priority (Default: 0)
+    search:   # Search parameters configuration
+    download:
+        extract:
+        outputs_prefix: /data/
+    auth:
+        credentials:
+            username: email@example.com
+            password: creodias-password
+    storage:
+        region_name: null
+        endpoint_url_local: http://data.cloudferro.com
+        endpoint_url_ext: https://cf2.cloudferro.com:8080
+        aws_access_key_id: fakeid
+        aws_secret_access_key: fakekey
+        config: null
+        output_directory: /data/
+        bucket: example-bucket

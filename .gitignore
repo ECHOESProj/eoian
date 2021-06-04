@@ -1,0 +1,5 @@
+.idea
+nocommit
+eoian/config/*
+!eoian/config/example.yaml
+!.gitignore 
