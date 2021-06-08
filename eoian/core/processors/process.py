@@ -28,21 +28,21 @@ class ProcessorSatpy(ProcessorBase):
 
     def __init__(self, module):
         super().__init__(module)
-        self.package = 'eoian.processors.satpy_env'
+        self.package = 'eoian.core.processors.satpy_env'
 
 
 class ProcessorSnappy(ProcessorBase):
 
     def __init__(self, module):
         super().__init__(module)
-        self.package = 'eoian.processors.snappy_env'
+        self.package = 'eoian.core.processors.snappy_env'
 
 
 class ProcessorGpt(ProcessorBase):
 
     def __init__(self, module):
         super().__init__(module)
-        self.package = 'eoian.eoian.processors'
+        self.package = 'eoian.core.processors'
 
 
 def processor(module: str):

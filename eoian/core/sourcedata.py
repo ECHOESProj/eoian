@@ -5,7 +5,7 @@ from os.path import basename
 from os.path import join, basename
 from shapely.geometry import shape
 
-from .platforms import platform_config
+from .settings import configuration
 
 
 class Area:
@@ -46,7 +46,7 @@ class SourceDataProduct:
 class SourceDataProducts:
 
     def __init__(self, area_wkt, product_type):
-        self.platform = platform_config()
+        self.platform = configuration()
         self.area_wkt = area_wkt
         self.product_type = product_type
         self.product_name = None

@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 
-import click
-
 import os
-from eoian.core import SourceDataProducts, Stores, product_name
-from eoian.processors.process import processor
+import click
+from core import SourceDataProducts, processor, product_name, Stores
 
 
 def processed_products(instrument, processing_module, area_path, start, stop, **kwargs):
@@ -30,8 +28,8 @@ def process_batches(instrument: str, processing_module: object, area_wkt: str, s
         prod.dataset = dataset
         prod.to_tiff(product_path) \
             # .resample() \
-            # .add_dims(info) \
-            # .to_zarr()
+        # .add_dims(info) \
+        # .to_zarr()
 
 
 @click.command()

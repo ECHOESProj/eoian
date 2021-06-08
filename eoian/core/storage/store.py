@@ -8,9 +8,9 @@ import xarray as xr
 import rioxarray
 from pyresample import kd_tree, geometry
 from zarr.errors import GroupNotFoundError
-from eoian.utils.resample import Resample
-from . platforms import platform_config
-from . store_objects import ReadWriteData
+from .. utils.resample import Resample
+from .. settings import configuration
+from .store_objects import ReadWriteData
 
 
 class GeoTiffWriter:
@@ -108,7 +108,7 @@ class Store:
 class Stores:
 
     def __init__(self):
-        self.platform = platform_config()
+        self.platform = configuration()
 
     @functools.lru_cache
     def postprocess(self, product_name):

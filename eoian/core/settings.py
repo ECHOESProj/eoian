@@ -75,7 +75,7 @@ def configs():
         yield platform
 
 
-def platform_config():
+def configuration():
     config_dict = {platform.platform: platform for platform in configs()}
     # sort so the highest priority comes first
     configs_list = sorted(configs(), key=lambda c: c.priority, reverse=True)
@@ -106,4 +106,4 @@ def platform_config():
 
 
 if __name__ == '__main__':
-    print(platform_config())
+    print(configuration())
