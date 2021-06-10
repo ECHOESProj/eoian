@@ -22,33 +22,33 @@ class BaseWriter(abc.ABC):
         self.store = store
         self.data = data
         file_path = self._product_path(product_identifier, extension)
-        self._to_store(join(top_level_directory, file_path))
-
-    @abc.abstractmethod
-    def _write(self, full_path):
-        pass
+        self.to_store(join(top_level_directory, file_path))
 
     def _product_path(self, product_identifier, extension):
         product_path = '/'.join(product_identifier.split('/')[2:])
         return os.path.splitext(product_path)[0] + extension
 
-    def _to_store(self, file_path):
+    @abc.abstractmethod
+    def write(self, full_path):
+        pass
+
+    def to_store(self, file_path):
         with tempfile.TemporaryDirectory() as tempdir:
             full_path = join(tempdir, file_path)
             makedirs(dirname(full_path))
-            self._write(full_path)
+            self.write(full_path)
             self.store.upload_file(full_path, file_path)
 
 
 class GeoTiffWriter(BaseWriter):
 
-    def _write(self, full_path):
+    def write(self, full_path):
         self.data.rio.to_raster(full_path)
 
 
 class MetaDataWriter(BaseWriter):
 
-    def _write(self, full_path):
+    def write(self, full_path):
         with open(full_path, 'w') as f:
             json.dump(self.data, f)
 
