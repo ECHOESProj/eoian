@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 
-import os
 import click
-from core import SourceDataProducts, processor, product_name, Stores
+from eoian.core import SourceDataProducts, processor, product_name, Stores
 
 
 def processed_products(instrument, processing_module, area_path, start, stop, **kwargs):
@@ -20,16 +19,12 @@ def processed_products(instrument, processing_module, area_path, start, stop, **
 
 def process_batches(instrument: str, processing_module: object, area_wkt: str, start, end, **kwargs) -> None:
     datacube_name = product_name(area_wkt, processing_module.module, **kwargs)
-    pp = Stores()
-    prod = pp.postprocess(datacube_name)
+    data_stores = Stores()
     for info, dataset in processed_products(instrument, processing_module, area_wkt, start, end, **kwargs):
-        product_path = '/'.join(info['productIdentifier'].split('/')[2:])
-        product_path = os.path.splitext(product_path)[0] + '.tif'
-        prod.dataset = dataset
-        prod.to_tiff(product_path) \
-            # .resample() \
-        # .add_dims(info) \
-        # .to_zarr()
+        store = data_stores.get_store(datacube_name, dataset, info)
+        store.to_tiff()
+        store.metadata_to_json()
+        # store.resample().add_metadata_to_dataset().to_zarr()
 
 
 @click.command()

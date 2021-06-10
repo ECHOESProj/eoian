@@ -6,19 +6,19 @@ from eoian.core.settings import configuration
 
 def test_creodias():
     os.environ['DATA_SOURCE'] = 'creodias'
-    assert configuration().platform == 'creodias'
+    assert configuration().config == 'creodias'
     del os.environ['DATA_SOURCE']
 
 
 def test_peps():
     os.environ['DATA_SOURCE'] = 'peps'
-    assert configuration().platform == 'peps'
+    assert configuration().config == 'peps'
     del os.environ['DATA_SOURCE']
 
 
 def test_store():
     os.environ['DATA_SOURCE'] = 'peps'
-    assert configuration().platform == 'peps'
+    assert configuration().config == 'peps'
     del os.environ['DATA_SOURCE']
 
 

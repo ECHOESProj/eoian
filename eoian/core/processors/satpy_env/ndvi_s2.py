@@ -5,7 +5,7 @@ from os.path import dirname
 from shapely import wkt
 from pyproj import Proj, itransform
 from pyresample.geometry import AreaDefinition, create_area_def
-from .. utils.resample import Resample
+from ... utils.resample import Resample
 
 
 def main(input_file: str, area_wkt: str) -> "Dataset":
