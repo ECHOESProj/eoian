@@ -4,8 +4,8 @@ import click
 from eoian.core import SourceDataProducts, processor, product_name, Stores
 
 
-def processed_products(instrument, processing_module, area_path, start, stop, **kwargs):
-    prods = SourceDataProducts(area_path, instrument)
+def processed_products(instrument, processing_module, area_path, start, stop, cloud_cover, **kwargs):
+    prods = SourceDataProducts(area_path, instrument, cloud_cover)
     for product in prods(start, stop):
         print(f"{product=}")
         product_filename = product.download()
@@ -17,14 +17,14 @@ def processed_products(instrument, processing_module, area_path, start, stop, **
             raise
 
 
-def process_batches(instrument: str, processing_module: object, area_wkt: str, start, end, **kwargs) -> None:
+def process_batches(instrument: str, processing_module: object, area_wkt: str, start, end, cloud_cover, **kwargs) -> None:
     datacube_name = product_name(area_wkt, processing_module.module, **kwargs)
     data_stores = Stores()
-    for info, dataset in processed_products(instrument, processing_module, area_wkt, start, end, **kwargs):
+    for info, dataset in processed_products(instrument, processing_module, area_wkt, start, end, cloud_cover, **kwargs):
         store = data_stores.get_store(datacube_name, dataset, info)
         store.to_tiff()
         store.metadata_to_json()
-        # store.resample().add_metadata_to_dataset().to_zarr()
+        # store.resample().add_attributes_to_dataset().to_zarr()
 
 
 @click.command()
@@ -33,7 +33,8 @@ def process_batches(instrument: str, processing_module: object, area_wkt: str, s
 @click.argument('area_wkt')
 @click.argument('start')
 @click.argument('end')
-def cli(instrument: str, processing_module: str, area_wkt: str, start: str, end: str) -> None:
+@click.option('--cloud_cover', default=None)
+def cli(instrument: str, processing_module: str, area_wkt: str, start: str, end: str, cloud_cover) -> None:
     """
 
     :param instrument: The name of the instrument (e.g. S1_SAR_GRD)
@@ -50,7 +51,7 @@ def cli(instrument: str, processing_module: str, area_wkt: str, start: str, end:
         kwargs = {'graph_path': processor}
     else:
         kwargs = {}
-    process_batches(instrument, processor(processing_module), area_wkt, start, end, **kwargs)
+    process_batches(instrument, processor(processing_module), area_wkt, start, end, cloud_cover, **kwargs)
 
 
 if __name__ == '__main__':

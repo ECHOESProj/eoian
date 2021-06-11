@@ -45,9 +45,10 @@ class SourceDataProduct:
 
 class SourceDataProducts:
 
-    def __init__(self, area_wkt, product_type):
+    def __init__(self, area_wkt, product_type, cloud_cover):
         self.platform = configuration()
         self.area_wkt = area_wkt
+        self.cloud_cover = cloud_cover
         self.product_type = product_type
         self.product_name = None
         self.graph_path = None
@@ -58,7 +59,8 @@ class SourceDataProducts:
             productType=self.product_type,
             start=start,
             end=end,
-            geom=self.area_wkt)
+            geom=self.area_wkt,
+            cloudCover=self.cloud_cover)
         for product in products:
             yield SourceDataProduct(product)
 

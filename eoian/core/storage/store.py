@@ -24,7 +24,8 @@ class BaseWriter(abc.ABC):
         file_path = self._product_path(product_identifier, extension)
         self.to_store(join(top_level_directory, file_path))
 
-    def _product_path(self, product_identifier, extension):
+    @staticmethod
+    def _product_path(product_identifier, extension):
         product_path = '/'.join(product_identifier.split('/')[2:])
         return os.path.splitext(product_path)[0] + extension
 
@@ -67,13 +68,13 @@ class Store:
         self.area_extent = None
 
     @staticmethod
-    def expand_and_add_coord(ds, value, dim):
+    def _expand_and_add_coord(ds, value, dim):
         ds = ds.expand_dims(dim=dim)
         ds[dim] = [value]
         ds = ds.assign_coords({dim: [value]})
         return ds
 
-    def set_area_info(self):
+    def _set_area_info(self):
         if not (self.area_id or self.proj_string):
             datacube = self.read_zarr()
             if datacube:
@@ -83,18 +84,21 @@ class Store:
                 self.area_extent = datacube.attrs['area_extent']
 
     def resample(self):
-        self.set_area_info()
+        self._set_area_info()
         self._dataset = Resample(self._dataset, self.area_id, self.proj_string, self.shape, self.area_extent).dataset
         return self
 
-    def add_metadata_to_dataset(self):
+    def add_attributes_to_dataset(self):
         start_time = datetime.datetime.strptime(self._dataset.start_date, '%d-%b-%Y %H:%M:%S.%f')
-        self._dataset = self.expand_and_add_coord(self._dataset, start_time, 'time')
+        self._dataset = self._expand_and_add_coord(self._dataset, start_time, 'time')
         self._dataset[r'relativeOrbitNumber'] = xr.DataArray(data=[self._info[r'relativeOrbitNumber']], dims=['time'])
         self._dataset['platformSerialIdentifier'] = xr.DataArray(data=[self._info['platformSerialIdentifier']],
                                                                  dims=['time'])
         self._dataset['title'] = xr.DataArray(data=[self._info['title']], dims=['time'])
         return self
+
+    def read_zarr(self):
+        return self.store.read()
 
     def to_zarr(self):
         ds_store = self.store.read()
@@ -105,9 +109,6 @@ class Store:
         except:
             raise
         return self
-
-    def read_zarr(self):
-        return self.store.read()
 
     def to_tiff(self):
         GeoTiffWriter(self.store, self._dataset, self.top_level_directory, self._info['productIdentifier'], '.tif')
