@@ -153,3 +153,9 @@ class Stores:
     def _get_store(self, product_name):
         store = ReadWriteData(self.config, product_name)
         return Store(self.config, store, product_name)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, type, value, traceback):
+        return True

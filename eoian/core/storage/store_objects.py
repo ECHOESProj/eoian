@@ -69,7 +69,6 @@ class ReadWriteData(ObjectStoreInterface):
             self.client_loc.upload_fileobj(local_fname, self.bucketname, store_name)
         except ClientError as e:
             print(e)
-            return False
 
     def to_zarr(self, dataset, append_dim='time'):
         if not any(self.resource_loc.Bucket(self.bucketname).objects.filter(

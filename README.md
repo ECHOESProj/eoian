@@ -1,5 +1,4 @@
-# Eoian
-**E**arth **O**bservation Processing Ch**ain**s
+# eoian: **e**arth **o**bservation processing ch**ain**s
 
 
 

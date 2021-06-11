@@ -4,27 +4,25 @@ import click
 from eoian.core import SourceDataProducts, processor, product_name, Stores
 
 
-def processed_products(instrument, processing_module, area_path, start, stop, cloud_cover, **kwargs):
-    prods = SourceDataProducts(area_path, instrument, cloud_cover)
-    for product in prods(start, stop):
-        print(f"{product=}")
-        product_filename = product.download()
-        info = product.properties
+def processed_products(instrument, processing_module, area_wkt, start, stop, cloud_cover, **kwargs):
+    for product in SourceDataProducts(area_wkt, instrument, cloud_cover, start, stop):
         try:
-            yield info, processing_module(product_filename, prods.area_wkt, **kwargs)
+            processed_product = processing_module(product.product_path, area_wkt, **kwargs)
+            yield product.properties, processed_product
         except Exception as exception:
             print(exception)
-            raise
 
 
-def process_batches(instrument: str, processing_module: object, area_wkt: str, start, end, cloud_cover, **kwargs) -> None:
+def process_batches(instrument: str, processing_module: object, area_wkt: str, start, end, cloud_cover,
+                    **kwargs) -> None:
     datacube_name = product_name(area_wkt, processing_module.module, **kwargs)
-    data_stores = Stores()
-    for info, dataset in processed_products(instrument, processing_module, area_wkt, start, end, cloud_cover, **kwargs):
-        store = data_stores.get_store(datacube_name, dataset, info)
-        store.to_tiff()
-        store.metadata_to_json()
-        # store.resample().add_attributes_to_dataset().to_zarr()
+    with Stores() as data_stores:
+        for info, dataset in processed_products(instrument, processing_module, area_wkt, start, end, cloud_cover,
+                                                **kwargs):
+            store = data_stores.get_store(datacube_name, dataset, info)
+            store.to_tiff()
+            store.metadata_to_json()
+            # store.resample().add_attributes_to_dataset().to_zarr()
 
 
 @click.command()
@@ -43,6 +41,7 @@ def cli(instrument: str, processing_module: str, area_wkt: str, start: str, end:
     :param area_wkt: The path to the region of interest file
     :param start: The start date of the search in the format YYYY-MM-DD
     :param end: The end date of the search in the format YYYY-MM-DD
+    :param cloud_cover: Threshold for allowed cloud cover
     :return:
     """
     click.echo()
