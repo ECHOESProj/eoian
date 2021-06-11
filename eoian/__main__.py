@@ -5,21 +5,21 @@ from eoian.core import SourceDataProducts, processor, product_name, Stores
 
 
 def processed_products(instrument, processing_module, area_wkt, start, stop, cloud_cover, **kwargs):
-    for product in SourceDataProducts(area_wkt, instrument, cloud_cover, start, stop):
+    for source_product in SourceDataProducts(area_wkt, instrument, cloud_cover, start, stop):
         try:
-            processed_product = processing_module(product.product_path, area_wkt, **kwargs)
-            yield product.properties, processed_product
+            processed_product = processing_module(source_product.product_path, area_wkt, **kwargs)
+            yield source_product.properties, processed_product
         except Exception as exception:
             print(exception)
 
 
-def process_batches(instrument: str, processing_module: object, area_wkt: str, start, end, cloud_cover,
-                    **kwargs) -> None:
-    datacube_name = product_name(area_wkt, processing_module.module, **kwargs)
+def store_processed_products(instrument: str, processing_module: object, area_wkt: str, start, end, cloud_cover,
+                             **kwargs) -> None:
+    name = product_name(area_wkt, processing_module.module, **kwargs)
     with Stores() as data_stores:
         for info, dataset in processed_products(instrument, processing_module, area_wkt, start, end, cloud_cover,
                                                 **kwargs):
-            store = data_stores.get_store(datacube_name, dataset, info)
+            store = data_stores.get_store(name, dataset, info)
             store.to_tiff()
             store.metadata_to_json()
             # store.resample().add_attributes_to_dataset().to_zarr()
@@ -38,7 +38,7 @@ def cli(instrument: str, processing_module: str, area_wkt: str, start: str, end:
     :param instrument: The name of the instrument (e.g. S1_SAR_GRD)
     :param processing_module: The processor to use. Either a path to xml file for the GPT
                               processor or the name of the Python module
-    :param area_wkt: The path to the region of interest file
+    :param area_wkt: The WKT string, which is the polygon of the ROI
     :param start: The start date of the search in the format YYYY-MM-DD
     :param end: The end date of the search in the format YYYY-MM-DD
     :param cloud_cover: Threshold for allowed cloud cover
@@ -50,7 +50,7 @@ def cli(instrument: str, processing_module: str, area_wkt: str, start: str, end:
         kwargs = {'graph_path': processor}
     else:
         kwargs = {}
-    process_batches(instrument, processor(processing_module), area_wkt, start, end, cloud_cover, **kwargs)
+    store_processed_products(instrument, processor(processing_module), area_wkt, start, end, cloud_cover, **kwargs)
 
 
 if __name__ == '__main__':
