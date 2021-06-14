@@ -1,4 +1,3 @@
-import geojson
 from eodag.api.core import EODataAccessGateway
 from glob import iglob
 from os.path import basename
