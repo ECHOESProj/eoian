@@ -42,6 +42,7 @@ class BaseWriter(abc.ABC):
             self.store.upload_file(full_path, file_path)
 
 
+
 class GeoTiffWriter(BaseWriter):
 
     def write(self, full_path):
@@ -103,8 +104,6 @@ class Store:
 
     def to_zarr(self):
         ds_store = self.store.read()
-        print(f"{ds_store=}")
-        print(f"{self._dataset=}")
         try:
             self.store.to_zarr(self._dataset)
         except:

@@ -17,7 +17,6 @@ class ObjectStoreInterface:
         self.bucketname = platform.bucket
         self.endpoints = {'external': self.platform.endpoint_url_local,
                           'local': self.platform.endpoint_url_ext}
-        print('self.platform.config', self.platform.config)
         self.credentials = dict(region_name=self.platform.region_name,
                                 aws_access_key_id=self.platform.aws_access_key_id,
                                 aws_secret_access_key=self.platform.aws_secret_access_key,
@@ -64,9 +63,11 @@ class ReadWriteData(ObjectStoreInterface):
 
     def upload_file(self, local_fname, store_name):
         try:
-            self.client_loc.upload_file(local_fname, self.bucketname, store_name)
-        except TypeError:
-            self.client_loc.upload_fileobj(local_fname, self.bucketname, store_name)
+            try:
+                self.client_loc.upload_file(local_fname, self.bucketname, store_name)
+            except TypeError:
+                self.client_loc.upload_fileobj(local_fname, self.bucketname, store_name)
+            print('s3-location: ' + self.bucketname + ' ' + store_name)
         except ClientError as e:
             print(e)
 

@@ -1,4 +1,4 @@
-from .sourcedata import SourceDataProducts, product_name
+from .sourcedata import SourceDataProducts
 from .storage.store import Store, Stores
 from .processors.process import processor
 

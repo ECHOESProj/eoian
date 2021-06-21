@@ -33,13 +33,10 @@ class Configuration:
         try:
             status = urllib.request.urlopen(self.endpoint_url_local, timeout=2).status == 200
         except urllib.error.HTTPError:
-            print('urllib.error.HTTPError')
             status = True
         except urllib.error.URLError:
-            print('urllib.error.URLError')
             status = False
         except timeout:
-            print('timeout')
             status = False
         return status
 
