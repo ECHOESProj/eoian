@@ -35,16 +35,18 @@ class ProcessingChain:
                 yield source_product.properties, self._processed_product(source_product)
             except Exception as exception:
                 print(exception)
+                raise
 
     def store_processed_products(self) -> None:
         name = self._product_name()
-        with Stores() as data_stores:
-            for info, dataset in self.processed_products():
-                store = data_stores.get_store(name, dataset, info)
-                # store.resample()
-                store.to_tiff()
-                store.metadata_to_json()
-                # store.add_attributes_to_dataset().to_zarr()
+        data_stores = Stores()
+        # with Stores() as data_stores:
+        for info, dataset in self.processed_products():
+            store = data_stores.get_store(name, dataset, info)
+            # store.resample()
+            store.to_tiff()
+            store.metadata_to_json()
+            # store.add_attributes_to_dataset().to_zarr()
 
 
 @click.command()

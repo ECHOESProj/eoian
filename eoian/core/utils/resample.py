@@ -9,7 +9,7 @@ class Resample:
         self.ds = dataset
         self.dataset_swath_def = self.swath_def(dataset)
 
-        if area_id and proj_string:
+        if area_id and proj_string and shape and area_extent:
             self.target_area_def = geometry.create_area_def(area_id, proj_string, shape=shape,
                                                             area_extent=area_extent)
         else:
@@ -56,3 +56,5 @@ class Resample:
                               'shape': self.target_area_def.shape,
                               'area_extent': self.target_area_def.area_extent})
         return self.ds
+
+

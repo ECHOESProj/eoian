@@ -6,6 +6,7 @@ import numpy as np
 import os
 import rioxarray
 import tempfile
+from satpy.scene import Scene
 import xarray as xr
 from os import makedirs, remove
 from os.path import dirname, join
@@ -42,11 +43,18 @@ class BaseWriter(abc.ABC):
             self.store.upload_file(full_path, file_path)
 
 
-
 class GeoTiffWriter(BaseWriter):
 
     def write(self, full_path):
         self.data.rio.to_raster(full_path)
+
+
+class SceneGeoTiffWriter(BaseWriter):
+
+    def write(self, full_path):
+        name = self.data.keys()[0]
+        self.data.save_datasets(datasets=[name, ], filename=full_path, writer='geotiff', include_scale_offset=True,
+                                dtype=np.float32)
 
 
 class MetaDataWriter(BaseWriter):
@@ -68,6 +76,7 @@ class Store:
         self.proj_string = None
         self.shape = None
         self.area_extent = None
+        self.scene = None
 
     @staticmethod
     def _expand_and_add_coord(ds, value, dim):
@@ -138,24 +147,34 @@ class Store:
         return repr(self.store)
 
 
+class StoreScene(Store):
+
+    @Store.dataset.setter
+    def dataset(self, dataset):
+        self.scene = dataset
+        self._dataset = dataset[dataset.keys()[0]]
+
+    def to_tiff(self):
+        SceneGeoTiffWriter(self.store, self.scene, self.top_level_directory, self._info['productIdentifier'], '.tif')
+        return self
+
+
 class Stores:
 
     def __init__(self):
         self.config = configuration()
 
     def get_store(self, product_name, dataset, info):
-        store = self._get_store(product_name)
+        store = self._get_store(product_name, dataset)
         store.dataset = dataset
         store.info = info
         return store
 
     @functools.lru_cache
-    def _get_store(self, product_name):
+    def _get_store(self, product_name, dataset):
         store = ReadWriteData(self.config, product_name)
-        return Store(self.config, store, product_name)
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, type, value, traceback):
-        return True
+        if isinstance(dataset, Scene):
+            store_cls = StoreScene
+        else:
+            store_cls = Store
+        return store_cls(self.config, store, product_name)

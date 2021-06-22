@@ -1,11 +1,6 @@
 # eoian: **e**arth **o**bservation processing ch**ain**s
 
 
-
-
-
-
-
 Build the docker image:
 
     docker build -t eo .
