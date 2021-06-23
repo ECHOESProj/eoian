@@ -37,17 +37,11 @@ def main(input_file: str, area_wkt: str) -> "Dataset":
 
     extents = scn.finest_area().area_extent_ll
     ad = area_def(extents, 0.0001)
-    s = scn.resample(ad)  # resampler='nearest'
+    s = scn.resample(ad)
 
     ndvi = (s['B08'] - s['B04']) / (s['B08'] + s['B04'])
     s['ndvi'] = ndvi
     s['ndvi'].attrs['area'] = s['B08'].attrs['area']
     del s['B04']
     del s['B08']
-    # xs, ys = np.meshgrid(ndvi.x.values, ndvi.y.values)
-    # lon1d, lat1d = reprojected(epsg, 4326, xs.ravel(), ys.ravel())
-    # lons, lats = lon1d.reshape(ndvi.shape), lat1d.reshape(ndvi.shape)
-    #
-    # ndvi = ndvi.assign_coords(lon=DataArray(np.array(lons), dims=['y', 'x']))
-    # ndvi = ndvi.assign_coords(lat=DataArray(np.array(lats), dims=['y', 'x']))
     return s
