@@ -35,7 +35,7 @@ class ProcessingChain:
                 yield source_product.properties, self._processed_product(source_product)
             except Exception as exception:
                 print(exception)
-                raise
+                print(f'Error with: {source_product.product_path}')
 
     def store_processed_products(self) -> None:
         name = self._product_name()

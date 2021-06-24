@@ -12,12 +12,9 @@ from ...utils import Resample, reproject
 
 
 def get_bounds(area, out_proj_espg_num):
-    bs = area.bounds
-    xs, ys = (bs[0], bs[2]), (bs[1], bs[3])
-    nx, ny = reproject(4326, out_proj_espg_num, xs, ys)
-    xy_bbox = list(nx)
-    xy_bbox.extend(list(ny))
-    return xy_bbox
+    xmin, ymin, xmax, ymax = area.bounds
+    (nxmin, nxmax), (nymin, nymax) = reproject(4326, out_proj_espg_num, (xmin, xmax), (ymin, ymax))
+    return nxmin, nymin, nxmax, nymax
 
 
 def area_def(area_extent, resolution):
