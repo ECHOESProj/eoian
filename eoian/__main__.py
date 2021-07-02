@@ -40,7 +40,6 @@ class ProcessingChain:
     def store_processed_products(self) -> None:
         name = self._product_name()
         data_stores = Stores()
-        # with Stores() as data_stores:
         for info, dataset in self.processed_products():
             store = data_stores.get_store(name, dataset, info)
             # store.resample()

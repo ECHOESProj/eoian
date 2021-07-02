@@ -12,17 +12,17 @@ import os
 
 @dataclass
 class Configuration:
-    platform: str
-    priority: int
-    filename: str
-    region_name: str
-    endpoint_url_local: str
-    endpoint_url_ext: str
     aws_access_key_id: str
     aws_secret_access_key: str
-    config: object
-    output_directory: str
-    bucket: str
+    platform: str = None
+    priority: int = None
+    filename: str = None
+    region_name: str = None
+    endpoint_url_local: str = None
+    endpoint_url_ext: str = None
+    config: object = None
+    output_directory: str = None
+    bucket: str = None
 
     def is_storage_accessible(self) -> bool:
         """
@@ -90,6 +90,7 @@ def configuration():
     else:
         raise IOError('Could not determine the platform')
 
+    platform_settings = platform_settings.copy()
     for v in ['region_name', 'endpoint_url_local', 'endpoint_url_ext', 'aws_access_key_id',  'aws_secret_access_key']:
         del data_source_platform[v]
     config = Configuration(**{**platform_settings, **data_source_platform})
