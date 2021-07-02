@@ -7,7 +7,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     apt-get install -y python3-pip binutils netcdf-bin libproj-dev gdal-bin libnetcdf-dev \
     libhdf5-serial-dev libproj-dev libgeos-dev proj-data proj-bin docker.io
 
-COPY ../requirements.txt /tmp/
+COPY requirements.txt /tmp/
 RUN pip3 install -r /tmp/requirements.txt
 
 COPY ../eoian /app/eoian
