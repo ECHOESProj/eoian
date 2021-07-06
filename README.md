@@ -24,5 +24,4 @@ Deploy:
 
     #remote:
     unzip deploy.zip -d eoian
-    cd eoian
-    docker build . -t eo --network host
+    docker build eoian -t eo --network host
