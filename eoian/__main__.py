@@ -69,7 +69,7 @@ def cli(instrument: str, processing_module: str, area_wkt: str, start: str, stop
     """
     click.echo()
     ProcessingChain(instrument, processor(processing_module), area_wkt, start, stop,
-                     cloud_cover=cloud_cover, graph_path=graph_path)
+                    cloud_cover=cloud_cover, graph_path=graph_path)
 
 
 if __name__ == '__main__':

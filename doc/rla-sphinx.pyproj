@@ -1,0 +1,116 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>290b0c64-f0ac-4886-b324-54322ed72bf6</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>
+    </StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <Name>rla-sphinx</Name>
+    <RootNamespace>rla-sphinx</RootNamespace>
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="docs\" />
+    <Folder Include="docs\images\" />
+    <Folder Include="docs\_static\" />
+    <Folder Include="docs\_static\css\" />
+    <Folder Include="docs\_templates\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="config.bat" />
+    <Content Include="docs\admin.rst">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="docs\glossary.rst">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="docs\images\assessments_datagrid.png" />
+    <Content Include="docs\images\assessments_filter.png" />
+    <Content Include="docs\images\audit_logs.png" />
+    <Content Include="docs\images\create_assessment_contributors.png" />
+    <Content Include="docs\images\create_assessment_general.png" />
+    <Content Include="docs\images\create_assessment_RE.png" />
+    <Content Include="docs\images\create_new_user.png" />
+    <Content Include="docs\images\create_new_user_roles.png" />
+    <Content Include="docs\images\create_realm_coordination.png" />
+    <Content Include="docs\images\create_realm_general.png" />
+    <Content Include="docs\images\create_realm_name.png" />
+    <Content Include="docs\images\create_role.png" />
+    <Content Include="docs\images\create_role_permissions.png" />
+    <Content Include="docs\images\create_working_set_general.png" />
+    <Content Include="docs\images\create_working_set_WSE.png" />
+    <Content Include="docs\images\maintenance.png" />
+    <Content Include="docs\images\realm.png" />
+    <Content Include="docs\images\roles.png" />
+    <Content Include="docs\images\roles_actions.png" />
+    <Content Include="docs\images\settings.png" />
+    <Content Include="docs\images\settings_appearance.png" />
+    <Content Include="docs\images\settings_security.png" />
+    <Content Include="docs\images\setting_email.png" />
+    <Content Include="docs\images\setting_usermgmt.png" />
+    <Content Include="docs\images\species_create1.png" />
+    <Content Include="docs\images\species_create2.png" />
+    <Content Include="docs\images\species_create3.png" />
+    <Content Include="docs\images\species_detail1.png" />
+    <Content Include="docs\images\species_detail2.png" />
+    <Content Include="docs\images\species_detail3.png" />
+    <Content Include="docs\images\species_detail4.png" />
+    <Content Include="docs\images\species_detail_assessments.png" />
+    <Content Include="docs\images\species_detail_CN.png" />
+    <Content Include="docs\images\species_detail_growth.png" />
+    <Content Include="docs\images\species_detail_history.png" />
+    <Content Include="docs\images\species_detail_RLA1.png" />
+    <Content Include="docs\images\species_detail_RLA2.png" />
+    <Content Include="docs\images\species_detail_Syn.png" />
+    <Content Include="docs\images\species_detail_tasks.png" />
+    <Content Include="docs\images\species_import.png" />
+    <Content Include="docs\images\species_list_filter.png" />
+    <Content Include="docs\images\users.png" />
+    <Content Include="docs\images\user_actions.png" />
+    <Content Include="docs\images\WIP.png" />
+    <Content Include="docs\images\working_sets.png" />
+    <Content Include="docs\workingsetmgmt.rst" />
+    <Content Include="docs\realmconfig.rst" />
+    <Content Include="docs\systemconfig.rst" />
+    <Content Include="docs\index.rst" />
+    <Content Include="docs\dashboard.rst" />
+    <Content Include="docs\rlasanbi.rst" />
+    <Content Include="docs\_static\compass-tracsis-group-logo.svg" />
+    <Content Include="docs\_static\css\default.css" />
+    <Content Include="docs\_static\debug.js" />
+    <Content Include="docs\_static\favicon.png" />
+    <Content Include="docs\_templates\layout.html" />
+    <Content Include="readme.txt" />
+    <Content Include="requirements.txt" />
+    <Content Include="sphinx.log" />
+    <Content Include="sphinx_tasks.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="docs\conf.py" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+  <!-- Uncomment the CoreCompile target to enable the Build command in
+       Visual Studio and specify your pre- and post-build commands in
+       the BeforeBuild and AfterBuild targets below. -->
+  <!--<Target Name="CoreCompile" />-->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+</Project>
