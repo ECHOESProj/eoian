@@ -8,3 +8,4 @@ eoian/config/*
 !eoian/config/example.yaml
 !.gitignore
 .venv
+deploy.zip
