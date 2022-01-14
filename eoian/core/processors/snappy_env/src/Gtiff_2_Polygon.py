@@ -12,7 +12,10 @@
 
 "Created:",
 
-import os 
+#  Copyright (c) 2022.
+#  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
+
+import os
 from osgeo import gdal
 import sqlite3
 import matplotlib.pyplot as plt

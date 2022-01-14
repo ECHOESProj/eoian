@@ -17,6 +17,9 @@ Inputs: Geoserver connection details, Database information
 
 '''
 
+#  Copyright (c) 2022.
+#  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
+
 # Declare required modules
 from geoserver.catalog import Catalog
 from geoserver.support import JDBCVirtualTable, JDBCVirtualTableGeometry, JDBCVirtualTableParam

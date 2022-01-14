@@ -12,6 +12,9 @@
 
 "Created: 08/01/2021",
 
+#  Copyright (c) 2022.
+#  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
+
 import Automation.utils.handler as handler
 import configparser
 import matplotlib.pyplot as plt

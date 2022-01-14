@@ -13,7 +13,10 @@
 
 "Created:",
 
-import os 
+#  Copyright (c) 2022.
+#  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
+
+import os
 import glob
 import pandas as pd
 from sqlalchemy import create_engine

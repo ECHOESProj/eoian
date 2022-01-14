@@ -1,3 +1,6 @@
+#  Copyright (c) 2022.
+#  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
+
 from dataclasses import dataclass
 from abc import abstractmethod, ABC
 import urllib

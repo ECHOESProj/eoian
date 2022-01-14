@@ -1,3 +1,6 @@
+#  Copyright (c) 2022.
+#  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
+
 import abc
 import datetime
 import functools

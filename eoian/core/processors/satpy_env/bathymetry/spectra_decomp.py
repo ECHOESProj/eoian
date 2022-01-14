@@ -1,3 +1,6 @@
+#  Copyright (c) 2022.
+#  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
+
 import pickle
 from os.path import dirname
 

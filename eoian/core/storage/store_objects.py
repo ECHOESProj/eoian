@@ -1,3 +1,6 @@
+#  Copyright (c) 2022.
+#  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
+
 from datetime import datetime
 from itertools import groupby
 from os.path import join

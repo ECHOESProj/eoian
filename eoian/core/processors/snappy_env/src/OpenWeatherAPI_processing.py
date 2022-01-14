@@ -12,6 +12,9 @@
 
 "Created:",
 
+#  Copyright (c) 2022.
+#  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
+
 import os
 import pandas as pd
 import geopandas as gpd

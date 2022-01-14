@@ -12,6 +12,9 @@
 
 "Created: 08/01/2021",
 
+#  Copyright (c) 2022.
+#  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
+
 import matplotlib.pyplot as plt
 import numpy
 # Declare required Snappy modules

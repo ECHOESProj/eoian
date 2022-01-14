@@ -1,3 +1,6 @@
+#  Copyright (c) 2022.
+#  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
+
 import numpy as np
 from datetime import datetime
 from os.path import dirname

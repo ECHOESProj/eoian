@@ -15,6 +15,9 @@ Author: Caoimhin Kelly,
 Created: 20/01/2021,
 """
 
+#  Copyright (c) 2022.
+#  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
+
 # Declare required Snappy modules
 import os
 import numpy as np

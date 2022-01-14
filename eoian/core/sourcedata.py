@@ -1,3 +1,6 @@
+#  Copyright (c) 2022.
+#  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
+
 from abc import abstractmethod, abstractproperty
 from eodag.api.core import EODataAccessGateway
 from glob import iglob
