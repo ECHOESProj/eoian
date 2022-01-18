@@ -5,7 +5,7 @@
 
 __author__ = "John Lavelle"
 __email__  = "jlavelle@compass.ie"
-__version__ = 1.0
+__version__ = 0.1
 
 import click
 from os.path import join
