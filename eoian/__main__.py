@@ -4,13 +4,13 @@
 #  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
 
 __author__ = "John Lavelle"
-__email__  = "jlavelle@compass.ie"
+__email__ = "jlavelle@compass.ie"
 __version__ = 0.1
 
 import click
 from os.path import join
 
-from eoian.core import SourceDataProducts, processor, Stores
+from eoian import SourceDataProducts, processor, eo_io
 
 
 class ProcessingChain:
@@ -23,6 +23,7 @@ class ProcessingChain:
         self.stop = stop
         self.cloud_cover = cloud_cover
         self.kwargs = kwargs
+        self.file_paths_zarr = []
         self.store_processed_products()
 
     def _product_name(self) -> str:
@@ -46,13 +47,14 @@ class ProcessingChain:
 
     def store_processed_products(self) -> None:
         name = self._product_name()
-        data_stores = Stores()
+        data_stores = eo_io.store_dataset.Stores()
         for info, dataset in self.processed_products():
             store = data_stores.get_store(name, dataset, info)
-            # store.resample()
+            store.resample()
             store.to_tiff()
             store.metadata_to_json()
-            # store.add_attributes_to_dataset().to_zarr()
+            store.add_attributes_to_dataset().to_zarr()
+            self.file_paths_zarr.append(store.file_path)
 
 
 @click.command()

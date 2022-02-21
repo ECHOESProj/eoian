@@ -10,6 +10,10 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
 COPY ./requirements.txt /tmp/
 RUN pip3 install -r /tmp/requirements.txt
 
+COPY ./eo-io /tmp/eo-io
+RUN ls /tmp/eo-io/
+RUN pip3 install /tmp/eo-io/
+
 COPY ./eoian /app/eoian
 WORKDIR /app/
 
