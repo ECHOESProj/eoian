@@ -47,13 +47,11 @@ class ProcessingChain:
 
     def store_processed_products(self) -> None:
         name = self._product_name()
-        data_stores = eo_io.store_dataset.Stores()
         for info, dataset in self.processed_products():
-            store = data_stores.get_store(name, dataset, info)
-            store.resample()
+            store = eo_io.store_dataset.store(dataset, name, info)
             store.to_tiff()
             store.metadata_to_json()
-            store.add_attributes_to_dataset().to_zarr()
+            store.to_zarr()
             self.file_paths_zarr.append(store.file_path)
 
 
