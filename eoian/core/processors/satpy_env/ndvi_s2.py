@@ -1,28 +1,11 @@
 #  Copyright (c) 2022.
 #  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
 
-import numpy as np
-from datetime import datetime
 from os.path import dirname
-from pyproj import Proj, itransform
-from pyresample.geometry import AreaDefinition, create_area_def
 from satpy import Scene, find_files_and_readers
-from satpy.dataset import DataQuery, DataID
 from shapely import wkt
-from xarray import DataArray
 
-from ...utils import Resample, reproject
-
-
-def get_bounds(area, out_proj_espg_num):
-    xmin, ymin, xmax, ymax = area.bounds
-    (nxmin, nxmax), (nymin, nymax) = reproject(4326, out_proj_espg_num, (xmin, xmax), (ymin, ymax))
-    return nxmin, nymin, nxmax, nymax
-
-
-def area_def(area_extent, resolution):
-    proj_dict = {'proj': 'longlat', 'datum': 'WGS84'}
-    return create_area_def('ROI', proj_dict, units='degrees', area_extent=area_extent, resolution=resolution)
+from .utils import  get_bounds, area_def
 
 
 def main(input_file: str, area_wkt: str) -> "Dataset":

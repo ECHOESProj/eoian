@@ -8,51 +8,8 @@ __email__ = "jlavelle@compass.ie"
 __version__ = 0.1
 
 import click
-from os.path import join
 
-from eoian import SourceDataProducts, processor, eo_io
-
-
-class ProcessingChain:
-
-    def __init__(self, instrument: str, processing_obj: object, area_wkt: str, start, stop, cloud_cover, **kwargs):
-        self.instrument = instrument
-        self.processing_obj = processing_obj
-        self.area_wkt = area_wkt
-        self.start = start
-        self.stop = stop
-        self.cloud_cover = cloud_cover
-        self.kwargs = kwargs
-        self.file_paths_zarr = []
-        self.store_processed_products()
-
-    def _product_name(self) -> str:
-        area = self.area_wkt.replace(' ', '_').replace(',', '!')
-        return join(area, self.processing_obj.module)
-
-    def _source_data_products(self):
-        return SourceDataProducts(self.area_wkt, self.instrument, self.cloud_cover, self.start, self.stop)
-
-    def _processed_product(self, source_product):
-        kwargs = {k: v for k, v in self.kwargs.items() if v is not None}  # Filter out the kwargs with value None
-        return self.processing_obj(source_product.product_path, self.area_wkt, **kwargs)
-
-    def processed_products(self):
-        for source_product in self._source_data_products():
-            try:
-                yield source_product.properties, self._processed_product(source_product)
-            except Exception as exception:
-                print(exception)
-                print(f'Error with: {source_product.product_path}')
-
-    def store_processed_products(self) -> None:
-        name = self._product_name()
-        for info, dataset in self.processed_products():
-            store = eo_io.store_dataset.store(dataset, name, info)
-            store.to_tiff()
-            store.metadata_to_json()
-            store.to_zarr()
-            self.file_paths_zarr.append(store.file_path)
+from eoian import ProcessingChain, processor
 
 
 @click.command()
@@ -75,8 +32,12 @@ def cli(instrument: str, processing_module: str, area_wkt: str, start: str, stop
     :return:
     """
     click.echo()
-    ProcessingChain(instrument, processor(processing_module), area_wkt, start, stop,
-                    cloud_cover=cloud_cover, graph_path=graph_path)
+    processing_chain = ProcessingChain(instrument, processor(processing_module), area_wkt, start, stop,
+                                       cloud_cover=cloud_cover, graph_path=graph_path)
+    for d in processing_chain:
+        d.to_tiff()
+        d.metadata_to_json()
+        # d.to_zarr()
 
 
 if __name__ == '__main__':

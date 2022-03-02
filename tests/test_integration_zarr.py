@@ -7,6 +7,10 @@ config_s3 = configuration()
 store = ReadWriteData(config_s3)
 
 
+class ProcessingNotDoneError(AssertionError):
+    pass
+
+
 def test_processing():
     instrument = 'S2_MSI_L1C'
     processing_module = 'ndvi_s2'
@@ -14,5 +18,10 @@ def test_processing():
     start = '2021-07-14'
     stop = '2021-07-19'
     cloud_cover = 90
-    pc = ProcessingChain(instrument, processor(processing_module), area_wkt, start, stop, cloud_cover=cloud_cover)
-    assert isinstance(store.read_zarr(pc.file_paths_zarr[0]), xr.Dataset)
+    for d in ProcessingChain(instrument, processor(processing_module), area_wkt, start, stop, cloud_cover=cloud_cover):
+        d.to_tiff()
+        d.metadata_to_json()
+        d.to_zarr()
+        assert isinstance(store.read_zarr(d.file_path), xr.Dataset)
+    else:
+        raise ProcessingNotDoneError

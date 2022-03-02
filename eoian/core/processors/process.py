@@ -1,6 +1,10 @@
 #  Copyright (c) 2022.
 #  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
 
+"""
+Get processing module
+"""
+
 import importlib
 
 
@@ -48,7 +52,7 @@ class ProcessorGpt(ProcessorBase):
         self.package = 'eoian.core.processors'
 
 
-def processor(module: str):
+def processor(module: str) -> object:
     """
 
     :param module:
