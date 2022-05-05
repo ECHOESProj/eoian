@@ -22,6 +22,6 @@ def test_processing():
         d.to_tiff()
         d.metadata_to_json()
         d.to_zarr()
-        assert isinstance(store.read_zarr(d.file_path), xr.Dataset)
+        assert isinstance(store.read_zarr(d.product_path), xr.Dataset)
     else:
         raise ProcessingNotDoneError

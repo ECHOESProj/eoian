@@ -1,12 +1,10 @@
 #  Copyright (c) 2022.
 #  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
 
-from abc import abstractmethod, abstractproperty
+import abc
 from eodag.api.core import EODataAccessGateway
 from glob import iglob
-from os.path import basename
-from os.path import join, basename
-from shapely.geometry import shape
+from os.path import join
 
 from .settings import configuration
 
@@ -15,18 +13,18 @@ from .settings import configuration
 #                                                Base Products                                                         #
 ########################################################################################################################
 
-class SourceDataProductBase:
+class SourceDataProductBase(abc.ABC):
 
-    @abstractmethod
+    @abc.abstractmethod
     def __init__(self, product: object):
-        pass
+        self.product = product
 
-    @abstractproperty
+    @abc.abstractmethod
     def product_path(self) -> str:
         pass
 
 
-class SourceDataProductsBase:
+class SourceDataProductsBase(abc.ABC):
 
     def __init__(self, area_wkt, product_type, cloud_cover, start, end):
         self.platform = configuration()
@@ -39,7 +37,7 @@ class SourceDataProductsBase:
         self.end = end
         self.estimated_total_nbr_of_results = None
 
-    @abstractmethod
+    @abc.abstractmethod
     def __iter__(self):
         pass
 

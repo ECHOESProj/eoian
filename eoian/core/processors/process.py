@@ -6,61 +6,82 @@ Get processing module
 """
 
 import importlib
+from typing import Union, Any, Callable
+from types import ModuleType
 
 
-class ProcessorBase:
+class Processor:
 
-    def __init__(self, module):
-        self.module = module
-        self.data = None
-        self.package = None  # Set this in the child module
+    def __init__(self, module_name: str):
+        self.module_name = module_name
+        self._package = None
+        self.processor_module = None
 
-    def module_exists(self):
-        return importlib.util.find_spec(f'.{self.module}', package=self.package)
+    def _module_exists_in_package(self) -> bool:
+        spec = importlib.util.find_spec(f'.{self.module_name}', package=self._package)
+        return True if spec else False
 
-    def import_module(self):
-        return importlib.import_module(f'.{self.module}', package=self.package)
+    def _import_module(self) -> ModuleType:
+        return importlib.import_module(f'.{self.module_name}', package=self._package)
 
-    def __call__(self, *args, **kwargs):
-        processor_module = self.import_module()
-        # All processing modules must have a main function
-        self.data = processor_module.main(*args, **kwargs)
-        return self.data
+    @property
+    def package(self):
+        return self._package
 
-    def __doc__(self):
-        return self.processor.main.__doc__
+    @package.setter
+    def package(self, package):
+        self._package = package
+        if not self._module_exists_in_package():
+            raise ModuleNotFoundError('Module not found in this package')
 
+    def __call__(self, input_file: str, area_wkt: str, **kwargs: Any) \
+            -> Union["xr.Dataset", "xr.DataArray", "sp.dataset"]:
+        self.processor_module = self._import_module()
+        return self.processor_module.main(input_file, area_wkt,
+                                          **kwargs)  # All processing modules must have a main function
 
-class ProcessorSatpy(ProcessorBase):
+    def __doc__(self) -> str:
+        return self.processor_module.main.__doc__
 
-    def __init__(self, module):
-        super().__init__(module)
-        self.package = 'eoian.core.processors.satpy_env'
-
-
-class ProcessorSnappy(ProcessorBase):
-
-    def __init__(self, module):
-        super().__init__(module)
-        self.package = 'eoian.core.processors.snappy_env'
-
-
-class ProcessorGpt(ProcessorBase):
-
-    def __init__(self, module):
-        super().__init__(module)
-        self.package = 'eoian.core.processors'
+    @property
+    def __name__(self) -> str:
+        return self.module_name
 
 
-def processor(module: str) -> object:
+# class ProcessorDocker(Processor):
+#
+#     def run_in_docker(self, function_file):
+#         #  docker function_file
+#
+#     def __call__(self, input_file: str, area_wkt: str, **kwargs: Any) \
+#             -> Union["xr.Dataset", "xr.DataArray", "sp.dataset"]:
+#         self.processor_module = self._import_module()
+#         return self.processor_module.main(input_file, area_wkt,
+#                                           **kwargs)  # All processing modules must have a main function
+
+def get_packages(package):
+    if package:
+        packages = [package, ]
+    else:  # list of packages to check if the module exists
+        packages = ['eoian.core.processors.satpy_env',
+                    'eoian.core.processors.snappy_env',
+                    'eoian.core.processors.snappy_env']
+    for _package in packages:
+        yield _package
+
+
+def processor(module: str, package: str = None) -> Callable:
     """
-
-    :param module:
-    :return:
+    @param module: str  # the name of the module
+    @param package: str  # the name of the package
+    @return: Callable  # the main function in the module
     """
-
-    for Processor in ProcessorBase.__subclasses__():
-        if (proc := Processor(module)).module_exists():
-            return proc
+    processor_callable = Processor(module)
+    for _package in get_packages(package):
+        try:
+            processor_callable.package = _package
+            return processor_callable
+        except ModuleNotFoundError:
+            pass
     else:
-        raise IOError('Module not found')
+        raise ModuleNotFoundError

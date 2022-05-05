@@ -8,7 +8,6 @@ __email__ = "jlavelle@compass.ie"
 __version__ = 0.1
 
 import click
-
 from eoian import ProcessingChain, processor
 
 
