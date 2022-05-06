@@ -9,13 +9,13 @@ def read_requirements(file):
 inst_reqs = read_requirements("requirements.txt")
 
 setup(
-    name='eoian',
+    name='eo_io',
     version='0.1',
-    packages=find_packages(exclude=["tests"]),
+    packages=find_packages(exclude=["test"]),
     inst_reqs=inst_reqs,
     url='',
     license='',
     author='John Lavelle',
     author_email='jlavelle@compass.ie',
-    description='EO processing chains'
+    description='CLI for Sentinel-Hub API'
 )
