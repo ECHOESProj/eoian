@@ -18,9 +18,8 @@ RUN mkdir -p /root/.ssh && \
     chmod 0700 /root/.ssh && \
     ssh-keyscan github.com > /root/.ssh/known_hosts && \
     echo "$ssh_prv_key" > /root/.ssh/id_rsa && \
-    echo "$ssh_pub_key" > /root/.ssh/id_rsa.pub && \
-    chmod 600 /root/.ssh/id_rsa && \
-    chmod 600 /root/.ssh/id_rsa.pub
+    chmod 600 /root/.ssh/id_rsa
+
 
 RUN pip3 install git+ssh://git@github.com/ECHOESProj/eo-io@main#egg=eo-io && \
     pip3 install git+ssh://git@github.com/ECHOESProj/eoian@main#egg=eoian && \
@@ -29,4 +28,4 @@ RUN pip3 install git+ssh://git@github.com/ECHOESProj/eo-io@main#egg=eo-io && \
 COPY ./eoian /app/eoian
 WORKDIR /app/
 
-#ENTRYPOINT  [ "python3", "-W", "ignore", "-m", "eoian" ]
+ENTRYPOINT  [ "python3", "-W", "ignore", "-m", "eoian" ]
