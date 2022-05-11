@@ -1,7 +1,6 @@
 FROM ubuntu:20.04
 
 ARG ssh_prv_key
-ARG ssh_pub_key
 
 ENV TZ=Europe/Dublin
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
