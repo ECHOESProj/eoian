@@ -1,7 +1,5 @@
 FROM ubuntu:20.04
 
-ARG ssh_prv_key
-
 ENV TZ=Europe/Dublin
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     echo $TZ > /etc/timezone && \
@@ -14,7 +12,7 @@ RUN pip3 install -r /tmp/requirements.txt
 
 # Authorize SSH Host
 RUN mkdir -p /root/.ssh
-COPY ./resources/id_rsa /root/.ssh
+COPY ./resources/keys/id_rsa /root/.ssh
 RUN chmod 0700 /root/.ssh && \
     ssh-keyscan github.com > /root/.ssh/known_hosts && \
     chmod 600 /root/.ssh/id_rsa
