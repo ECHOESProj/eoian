@@ -10,3 +10,4 @@ eoian/config/*
 .venv
 deploy.zip
 Pipfile*
+resources/id_rsa

@@ -13,12 +13,11 @@ COPY ./requirements.txt /tmp/
 RUN pip3 install -r /tmp/requirements.txt
 
 # Authorize SSH Host
-RUN mkdir -p /root/.ssh && \
-    chmod 0700 /root/.ssh && \
+RUN mkdir -p /root/.ssh
+COPY ./resources/id_rsa /root/.ssh
+RUN chmod 0700 /root/.ssh && \
     ssh-keyscan github.com > /root/.ssh/known_hosts && \
-    echo "$ssh_prv_key" > /root/.ssh/id_rsa && \
     chmod 600 /root/.ssh/id_rsa
-
 
 RUN pip3 install git+ssh://git@github.com/ECHOESProj/eo-io@main#egg=eo-io && \
     pip3 install git+ssh://git@github.com/ECHOESProj/eoian@main#egg=eoian && \
