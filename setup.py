@@ -9,7 +9,7 @@ def read_requirements(file):
 inst_reqs = read_requirements("requirements.txt")
 
 setup(
-    name='eo_io',
+    name='eoian',
     version='0.1',
     packages=find_packages(exclude=["test"]),
     inst_reqs=inst_reqs,
