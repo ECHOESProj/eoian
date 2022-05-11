@@ -18,5 +18,5 @@ setup(
     license='',
     author='John Lavelle',
     author_email='jlavelle@compass.ie',
-    description='CLI for Sentinel-Hub API'
+    description=''
 )
