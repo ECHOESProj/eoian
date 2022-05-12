@@ -17,6 +17,8 @@ RUN chmod 0700 /root/.ssh && \
     ssh-keyscan github.com > /root/.ssh/known_hosts && \
     chmod 600 /root/.ssh/id_rsa
 
+COPY ./resources/eoconfig/creodias.yaml /root/eoconfig/creodias.yaml
+
 RUN pip3 install git+ssh://git@github.com/ECHOESProj/eo-io@main#egg=eo-io && \
     pip3 install git+ssh://git@github.com/ECHOESProj/eoian@main#egg=eoian && \
     pip3 install git+https://github.com/dcs4cop/xcube.git
