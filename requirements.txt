@@ -1,6 +1,6 @@
+awscli == 1.14.17
 Bottleneck
 Shapely
-boto3
 click
 eodag
 netCDF4
