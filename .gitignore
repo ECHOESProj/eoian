@@ -11,3 +11,4 @@ eoian/config/*
 deploy.zip
 Pipfile*
 resources/keys/id_rsa
+*.egg*
