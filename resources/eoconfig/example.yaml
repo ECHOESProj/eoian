@@ -1,0 +1,23 @@
+peps:
+    priority: 0 # Lower value means lower priority (Default: 0)
+    search:   # Search parameters configuration
+    download:
+        extract:
+        outputs_prefix: /data/
+    auth:
+        credentials:
+            username: example@email.com
+            password: fsdgfretgfd
+    storage:
+        region_name: null
+        endpoint_url_local: http://196.18.4.190:9000
+        endpoint_url_ext: http://196.18.4.190:9000
+        aws_access_key_id: minioadmin
+        aws_secret_access_key: minioadmin
+        config: Config(signature_version='s3v4')
+        output_directory: /data/
+        bucket: bucket-name
+sentinel-hub:
+    instance_id: fdsafgwert
+    sh_client_id: fasgytrh
+    sh_client_secret: hyrthrfgthnbfg

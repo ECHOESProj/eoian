@@ -1,0 +1,23 @@
+peps:
+    priority: 4 # Lower value means lower priority (Default: 0)
+    search:   # Search parameters configuration
+    download:
+        extract:
+        outputs_prefix: /data/
+    auth:
+        credentials:
+            username: licensing@compass.ie
+            password: 4HpS5H&RKjpT
+    storage:
+        region_name: null
+        endpoint_url_local: http://172.25.83.229:9000
+        endpoint_url_ext: http://172.25.83.229:9000
+        aws_access_key_id: minioadmin
+        aws_secret_access_key: minioadmin
+        config: Config(signature_version='s3v4')
+        output_directory: /data/
+        bucket: compass-eo
+sentinel-hub:
+    instance_id: 08946e34-0ced-461c-9c2d-9425b4e781c3
+    sh_client_id: 7d3cf58c-1fca-451c-a624-69b6f1b8b58e
+    sh_client_secret: DD,TOB-UuXa,Qh}F@,|9L<w[+N?t&3OU)r(+_-~&

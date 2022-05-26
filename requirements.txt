@@ -1,16 +1,13 @@
-# awscli == 1.14.17
-boto3
 Bottleneck
 Shapely
-click
 eodag
 netCDF4
 pandas
 pytest
-pyyaml
+PyYAML
 rasterio
 rioxarray
 s3fs
 satpy[msi_safe,sar_c]
 sentinelhub
-shapely
+Shapely

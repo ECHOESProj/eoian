@@ -4,7 +4,7 @@ ENV TZ=Europe/Dublin
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     echo $TZ > /etc/timezone && \
     apt-get update && \
-    apt-get install -y python3-pip binutils netcdf-bin libproj-dev gdal-bin libnetcdf-dev \
+    apt-get install -y python3-pip python3-gdal binutils netcdf-bin libproj-dev gdal-bin libnetcdf-dev \
     libhdf5-serial-dev libproj-dev libgeos-dev proj-data proj-bin docker.io git
 
 COPY ./requirements.txt /tmp/
