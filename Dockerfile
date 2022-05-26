@@ -19,9 +19,7 @@ RUN chmod 0700 /root/.ssh && \
 
 COPY ./resources/eoconfig/creodias.yaml /root/eoconfig/creodias.yaml
 
-RUN pip3 install git+ssh://git@github.com/ECHOESProj/eo-io@main#egg=eo-io && \
-    pip3 install git+ssh://git@github.com/ECHOESProj/eoian@main#egg=eoian && \
-    pip3 install git+https://github.com/dcs4cop/xcube.git
+RUN pip3 install git+ssh://git@github.com/ECHOESProj/eo-io@main#egg=eo-io
 
 COPY ./eoian /app/eoian
 WORKDIR /app/

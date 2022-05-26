@@ -14,3 +14,6 @@ deploy.zip
 Pipfile*
 resources/keys/id_rsa
 *.egg*
+
+# Allow
+!resources/*/place_*

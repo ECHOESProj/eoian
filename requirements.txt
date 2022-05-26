@@ -2,9 +2,9 @@ Bottleneck
 Shapely
 eodag
 netCDF4
+numpy==1.22.4
 pandas
 pytest
-PyYAML
 rasterio
 rioxarray
 s3fs

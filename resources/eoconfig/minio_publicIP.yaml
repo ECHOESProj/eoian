@@ -10,8 +10,10 @@ peps:
             password: 4HpS5H&RKjpT
     storage:
         region_name: null
-        endpoint_url_local: http://172.25.83.229:9000
-        endpoint_url_ext: http://172.25.83.229:9000
+#        endpoint_url_local: http://172.25.83.229:9000
+#        endpoint_url_ext: http://172.25.83.229:9000
+        endpoint_url_local: http://127.0.0.1:9000
+        endpoint_url_ext: http://127.0.0.1:9000
         aws_access_key_id: minioadmin
         aws_secret_access_key: minioadmin
         config: Config(signature_version='s3v4')

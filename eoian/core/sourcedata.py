@@ -6,7 +6,7 @@ from eodag.api.core import EODataAccessGateway
 from glob import iglob
 from os.path import join
 
-from .settings import configuration
+from eo_io import configuration
 
 
 ########################################################################################################################
