@@ -1,9 +1,8 @@
 __pycache__/
 *.py[cod]
 *$py.class
-eoconfig/*.yaml
 .idea
-id_rsa
+resources/*
 html/
 nocommit/
 eoian/config/*
@@ -12,8 +11,5 @@ eoian/config/*
 .venv
 deploy.zip
 Pipfile*
-resources/keys/id_rsa
 *.egg*
 
-# Allow
-!resources/*/place_*
