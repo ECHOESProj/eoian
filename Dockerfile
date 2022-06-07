@@ -19,7 +19,7 @@ RUN chmod 0700 /root/.ssh && \
 
 RUN pip3 install git+ssh://git@github.com/ECHOESProj/eo-io@main#egg=eo-io
 
-COPY ./resources/config_eo_service.yml /root/config_eo_service.yml
+COPY ./credentials/config_eo_service.yml /root/config_eo_service.yml
 
 
 COPY ./eoian /app/eoian
