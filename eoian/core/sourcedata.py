@@ -4,7 +4,7 @@
 import abc
 from eodag.api.core import EODataAccessGateway
 from glob import iglob
-from os.path import join
+from os.path import join, basename
 
 from eo_io import configuration
 
@@ -56,8 +56,9 @@ class SourceDataProduct(SourceDataProductBase):
 
     @property
     def product_path(self) -> str:
-        direc = self.eodag_product.download().replace('file://', '')
-        return next(iglob(join(direc, '*.SAFE')))  # TODO: Remove .SAFE to make generic
+        full_path = self.eodag_product.download().replace('file://', '')
+        direc = '/'.join(full_path.split('/')[:-1])
+        return next(iglob(join(direc, '*.*')))
 
 
 class SourceDataProducts(SourceDataProductsBase):

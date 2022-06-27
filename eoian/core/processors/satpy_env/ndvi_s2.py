@@ -5,7 +5,7 @@ from os.path import dirname
 from satpy import Scene, find_files_and_readers
 from shapely import wkt
 
-from .utils import  get_bounds, area_def
+from .utils import get_bounds, area_def
 
 
 def main(input_file: str, area_wkt: str) -> "Dataset":
