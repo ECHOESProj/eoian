@@ -22,4 +22,4 @@ def main(input_file: str, area_wkt: str) -> dataset:
 
     extents = scn.finest_area().area_extent_ll
     ad = area_def(extents, 0.0001)
-    return scn.resample(ad)
+    return scn.resample_dataset(ad)

@@ -36,6 +36,11 @@ class SourceDataProductsBase(abc.ABC):
         self.start = start
         self.end = end
         self.estimated_total_nbr_of_results = None
+        self.access_gateway = self.get_access_gateway()
+
+    @abc.abstractmethod
+    def get_access_gateway(self):
+        pass
 
     @abc.abstractmethod
     def __iter__(self):
@@ -63,9 +68,15 @@ class SourceDataProduct(SourceDataProductBase):
 
 class SourceDataProducts(SourceDataProductsBase):
 
+    def get_access_gateway(self):
+        return EODataAccessGateway(self.platform.filename)
+
     def __iter__(self):
-        access_gateway = EODataAccessGateway(self.platform.filename)
-        products, self.estimated_total_nbr_of_results = access_gateway.search(
+        product_types = [t['ID'] for t in self.access_gateway.list_product_types()]
+        if self.product_type not in product_types:
+            raise ValueError(f"Product type {self.product_type} is not valid."
+                             f"\n\tValid product types:\n\t{product_types}")
+        products, self.estimated_total_nbr_of_results = self.access_gateway.search(
             productType=self.product_type,
             start=self.start,
             end=self.end,

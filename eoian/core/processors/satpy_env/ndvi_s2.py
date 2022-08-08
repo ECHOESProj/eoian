@@ -20,7 +20,7 @@ def main(input_file: str, area_wkt: str) -> "Dataset":
 
     extents = scn.finest_area().area_extent_ll
     ad = area_def(extents, 0.0001)
-    s = scn.resample(ad)
+    s = scn.resample_dataset(ad)
 
     ndvi = (s['B08'] - s['B04']) / (s['B08'] + s['B04'])
     s['ndvi'] = ndvi
