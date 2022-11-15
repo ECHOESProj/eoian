@@ -42,7 +42,7 @@ class ProcessingChain:
             dataset = self.process(source_product)
             md = source_product.properties
             metadata = eo_io.metadata.Metadata(source_product, product_directory, md['platform'], md['instrument'],
-                                                    md['processingLevel'], md['startTimeFromAscendingNode'], md['id'],
-                                                    md['relativeOrbitNumber'], md['platformSerialIdentifier'])
+                                               md['processingLevel'], md['startTimeFromAscendingNode'], md['id'],
+                                               md['relativeOrbitNumber'], md['platformSerialIdentifier'])
             store = eo_io.store_dataset.store(dataset, metadata)
             yield store
