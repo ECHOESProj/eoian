@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 
-#  Copyright (c) 2022.
-#  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
 
 __author__ = "John Lavelle"
 __email__ = "jlavelle@compass.ie"
 __version__ = 0.1
 
 import click
+
 from eoian import ProcessingChain, processor
 
 

@@ -1,6 +1,3 @@
-#  Copyright (c) 2022.
-#  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
-
 import numpy as np
 import xarray as xr
 from pyresample import kd_tree, geometry
@@ -59,5 +56,3 @@ class Resample:
                               'shape': self.target_area_def.shape,
                               'area_extent': self.target_area_def.area_extent})
         return self.ds
-
-

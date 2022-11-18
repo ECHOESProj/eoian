@@ -12,25 +12,19 @@
 
 "Created: 08/01/2021",
 
-#  Copyright (c) 2022.
-#  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
-
-import Automation.utils.handler as handler
 import configparser
-import matplotlib.pyplot as plt
-import numpy
 # Declare required Snappy modules
 import os
-import snappy
-import sys
 from pathlib import Path
-from snappy import FlagCoding
+
+import Automation.utils.handler as handler
+import numpy
+import snappy
 from snappy import Product
 from snappy import ProductData
 from snappy import ProductIO
 from snappy import ProductUtils
 from snappy import WKTReader
-from snappy import jpy, GPF
 
 CONFIG_PATH = str(Path(__file__).parent / "config.ini").replace("GIS_processing", "Automation")
 with open(CONFIG_PATH, 'r') as f:

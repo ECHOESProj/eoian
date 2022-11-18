@@ -17,25 +17,15 @@ Inputs: Geoserver connection details, Database information
 
 '''
 
-#  Copyright (c) 2022.
-#  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
+import os
+import stat
 
-# Declare required modules
-from geoserver.catalog import Catalog, FailedRequestError
-from geoserver.support import JDBCVirtualTable, JDBCVirtualTableGeometry, JDBCVirtualTableParam
-import psycopg2
-import sqlalchemy as db
-import rasterio
-from rasterio.io import MemoryFile
-from osgeo import gdal
-import numpy
-from PIL import Image
-from rasterio.transform import from_origin
-import os, stat
 import pygresql as pg
+# Declare required modules
+from geoserver.catalog import Catalog
+
 
 def raster_process():
-    
     outfile = 'D:\Projects\Active\Intereg_Echeos\RemoteSensing\Images\temp.tiff'
     pg_table = 'subset_s2a_msil2a_20201022_ndvi'
 
@@ -44,7 +34,7 @@ def raster_process():
 
     sql = "COPY (SELECT encode(ST_AsTIFF(ST_Union(" + pg_table + ".rast)), 'hex') FROM " + pg_table + ") TO '" + pg_hex + "'"
     conn = pg.connect('echoes', 'W19-PostGIS', 5432, None, None, 'postgres')
-    
+
     conn.query(sql)
 
     cmd = 'xxd -p -r ' + pg_hex + ' > ' + outfile
@@ -52,20 +42,19 @@ def raster_process():
 
 
 # Publication definition
-def publication_process(Workspace,store,layer):
-    
+def publication_process(Workspace, store, layer):
     # Geoserver connection is established.
     cat = Catalog("http://192.168.0.146:8080/geoserver/rest/", username="admin", password="geoserver")
     print("GeoServer Connected")
 
     # Workspace name is searched, if none is returned a new workspace is created.
     if cat.get_workspace(Workspace) == None:
-       ws = cat.create_workspace(Workspace, 'http://example.com/wmstest')
-       print("\n Could not find the required workspace, A new workspace has been created named:",ws)
+        ws = cat.create_workspace(Workspace, 'http://example.com/wmstest')
+        print("\n Could not find the required workspace, A new workspace has been created named:", ws)
     else:
-       ws = cat.get_workspace(Workspace)
-       print("\n Required workspace:",ws,"found")
-    
+        ws = cat.get_workspace(Workspace)
+        print("\n Required workspace:", ws, "found")
+
     # Store is searched for within the workspace
     store = "ID"
 
@@ -73,15 +62,15 @@ def publication_process(Workspace,store,layer):
     print(tds)
     cat.delete(tds)
     cat.reload()
-    #cat.save(ft)
+    # cat.save(ft)
     # If the returned list of stores is empty a new store is created connecting to the PostGIS database. If returned the store is loaded.
-    cat.create_coveragestore(name= store,
-                         path='D:\Projects\Active\Intereg_Echeos\RemoteSensing\Sentinel-1\Ireland\Sen1_20201028\processed_output\GeoTIFF\Flooding_Estimation.TIF',
-                         workspace=ws,
-                         overwrite=True)
+    cat.create_coveragestore(name=store,
+                             path='D:\Projects\Active\Intereg_Echeos\RemoteSensing\Sentinel-1\Ireland\Sen1_20201028\processed_output\GeoTIFF\Flooding_Estimation.TIF',
+                             workspace=ws,
+                             overwrite=True)
+
 
 def main():
-
     # Define Workspace, store and the layer to be published
     Workspace = 'test'
     store = 'test1'
@@ -90,9 +79,10 @@ def main():
     raster_process()
 
     # Call to the publication function
-    #publication_process(Workspace,store,layer)
-    
+    # publication_process(Workspace,store,layer)
+
+
 if __name__ == "__main__":
     # only run this if this is the start up script and not imported
     main()
-    print ("Done!")
+    print("Done!")

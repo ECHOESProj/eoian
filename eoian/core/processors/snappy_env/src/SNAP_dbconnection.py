@@ -18,33 +18,15 @@ Created: 11/02/2021
 
 '''
 
-#  Copyright (c) 2022.
-#  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
-
 # Declare required Snappy modules
-import os
-from os import walk
-import sys
-import snappy
-from snappy import Product
-from snappy import ProductData
-from snappy import ProductIO
-from snappy import ProductUtils
-from snappy import FlagCoding
-from snappy import  WKTReader
-from snappy import jpy, GPF
-import matplotlib.pyplot as plt
-import shutil, os, glob
 import psycopg2
-from psycopg2 import Error
 
- 
+
 # https://github.com/senbox-org/snap-engine/blob/0fe1333118cb477666eb8d9231b9b0ae5a5559d8/snap-python/src/main/resources/snappy/examples/snappy_ndvi_with_masks.py#L33-L38
 # https://github.com/senbox-org/snap-engine/blob/master/snap-python/src/main/resources/snappy/examples/snappy_geo_roi.py#L38   
-    
+
 
 def postgisdb_connect():
-    
     connection = psycopg2.connect(user="postgres",
                                   password="HuufDorf13!",
                                   host="W19-PostGIS",
@@ -62,20 +44,21 @@ def postgisdb_connect():
     cursor.execute(sql)
 
     record = cursor.fetchall()
-    #geom = record[0][0]
-    myDict = dict() 
-    
+    # geom = record[0][0]
+    myDict = dict()
+
     myDict = record
 
     for i in myDict:
         print(i[4])
-    #print(myDict)
+    # print(myDict)
+
 
 def main():
-    
     postgisdb_connect()
+
 
 if __name__ == "__main__":
     # only run this if this is the start up script and not imported
     main()
-    print ("Done!")
+    print("Done!")

@@ -1,6 +1,3 @@
-#  Copyright (c) 2022.
-#  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
-
 # Configuration file for the Sphinx documentation builder.
 #
 # This file only contains a selection of the most common options. For a full
@@ -15,7 +12,7 @@
 #
 import os
 import sys
-import sphinx_rtd_theme
+
 from sphinx.locale import _
 
 sys.path.insert(0, os.path.abspath('.'))
@@ -23,7 +20,6 @@ sys.path.insert(0, os.path.abspath('.'))
 # Add path to the demo documentation.
 # Without this autodoc does not work.
 sys.path.append(os.path.abspath('./demo/'))
-
 
 # -- Project information -----------------------------------------------------
 
@@ -33,7 +29,6 @@ author = 'Compass Informatics'
 
 # The full version, including alpha/beta/rc tags
 release = '1.0'
-
 
 # -- General configuration ---------------------------------------------------
 
@@ -58,7 +53,6 @@ templates_path = ['_templates']
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
-
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
@@ -79,13 +73,13 @@ html_logo = '_static/compass-tracsis-group-logo.svg'
 # boneill: All available options.
 html_theme_options = {
     'canonical_url': '',
-    #'analytics_id': 'UA-XXXXXXX-1',  #  Provided by Google in your dashboard
+    # 'analytics_id': 'UA-XXXXXXX-1',  #  Provided by Google in your dashboard
     'logo_only': False,
     'display_version': True,
     'prev_next_buttons_location': 'bottom',
     'style_external_links': False,
-    #'vcs_pageview_mode': '', boneill: This option currently does not work, there is a patch coming soon for it: https://github.com/readthedocs/sphinx_rtd_theme/issues/701
-    #'style_nav_header_background': 'white',
+    # 'vcs_pageview_mode': '', boneill: This option currently does not work, there is a patch coming soon for it: https://github.com/readthedocs/sphinx_rtd_theme/issues/701
+    # 'style_nav_header_background': 'white',
     # Toc options
     'collapse_navigation': False,
     'sticky_navigation': True,
@@ -103,6 +97,7 @@ html_static_path = ['_static']
 html_css_files = [
     'css/default.css',
 ]
+
 
 # Extensions to theme docs
 def setup(app):

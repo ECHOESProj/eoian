@@ -1,23 +1,20 @@
-#  Copyright (c) 2022.
-#  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
-
 import pickle
 from os.path import dirname
 
 import dask
+import geopandas as gpd
 import numpy as np
 import xarray as xr
 from satpy import Scene, find_files_and_readers
 from satpy.dataset import DataQuery
 from scipy import fftpack
-from sklearn.decomposition import IncrementalPCA, PCA
-import geopandas as gpd
 
 sub_size = 256
 Ncomps = 64
 
-
 df_europe = gpd.read_file("eoian/data/europe_coastline/Europe_coastline_poly.shp")
+
+
 # df_europe.intersection(b).area.sum() / shape(b).area
 
 
@@ -34,7 +31,7 @@ def get_data(input_file):
     return ds
 
 
-def get_rolling(dataset, sub_size, stride=sub_size//2):
+def get_rolling(dataset, sub_size, stride=sub_size // 2):
     with dask.config.set(**{'array.slicing.split_large_chunks': True}):
         return dataset.rolling({'x': sub_size, 'y': sub_size}, center=True). \
             construct(x='wx', y='wy', stride=stride).chunk()
@@ -93,11 +90,11 @@ def get_rolling_output(input_file):
 
     cw = ComponentWeights()
     components = xr.apply_ufunc(cw.get_pca_weights,
-                   specs,
-                   input_core_dims=[['x', 'y']],
-                   output_core_dims=[['component']],
-                   output_dtypes=[float],
-                   dask_gufunc_kwargs={'output_sizes': {'component': Ncomps}},
-                   dask='parallelized',
-                   vectorize=True)
+                                specs,
+                                input_core_dims=[['x', 'y']],
+                                output_core_dims=[['component']],
+                                output_dtypes=[float],
+                                dask_gufunc_kwargs={'output_sizes': {'component': Ncomps}},
+                                dask='parallelized',
+                                vectorize=True)
     return specs

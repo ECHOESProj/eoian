@@ -1,11 +1,10 @@
-#  Copyright (c) 2022.
-#  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
-
-import eoian
 import subprocess
 import tempfile
-import xarray as xr
 from os.path import join, basename, dirname
+
+import xarray as xr
+
+import eoian
 
 
 def main(input_file: str, area_wkt: str, *, graph_path: str) -> "Dataset":
@@ -13,7 +12,7 @@ def main(input_file: str, area_wkt: str, *, graph_path: str) -> "Dataset":
     with tempfile.TemporaryDirectory() as out_netcdf_dir:
         output_netcdf = join(out_netcdf_dir, basename(input_file) + '.nc')
         package_dir = dirname(eoian.__path__[0])
-        graphs_dir = join(package_dir,  'eoian/resources/graphs')
+        graphs_dir = join(package_dir, 'eoian/resources/graphs')
         cmd = (f"docker run -v '{graphs_dir}':/tmp/graphs",
                f"-v '{out_netcdf_dir}':'{out_netcdf_dir}'",
                f"-v '{input_file}':'{input_file}'",

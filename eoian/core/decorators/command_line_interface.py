@@ -1,7 +1,9 @@
+from functools import wraps
+
 import click
+
 import eo_io
 from eoian.core.processing_chain import ProcessingChain
-from functools import wraps
 
 
 def to_storage_cli(func):
@@ -15,6 +17,7 @@ def to_storage_cli(func):
         out, metadata = func(area_wkt, date1, date2)
         store = eo_io.store_dataset.store(out, metadata)
         store.to_tiff()
+
     return wrapper_cli
 
 
@@ -55,5 +58,7 @@ def processing_chain_cli(to_tiff=True, metadata_to_json=True, to_zarr=True):
                     d.metadata_to_json()
                 if to_zarr:
                     d.to_zarr()
+
         return wrapper_cli_inner
+
     return wrapper_cli_outer

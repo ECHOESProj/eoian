@@ -1,10 +1,8 @@
-#  Copyright (c) 2022.
-#  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
-
 import abc
-from eodag.api.core import EODataAccessGateway
 from glob import iglob
-from os.path import join, basename
+from os.path import join
+
+from eodag.api.core import EODataAccessGateway
 
 from eo_io import configuration
 

@@ -1,7 +1,8 @@
 from os.path import join
-from .sourcedata import SourceDataProducts
-import eo_io
 from typing import Callable, Any
+
+import eo_io
+from .sourcedata import SourceDataProducts
 
 
 class ProcessingChain:

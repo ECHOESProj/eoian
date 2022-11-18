@@ -1,7 +1,5 @@
-#  Copyright (c) 2022.
-#  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
-
 from os.path import dirname
+
 from satpy import Scene, find_files_and_readers
 from shapely import wkt
 

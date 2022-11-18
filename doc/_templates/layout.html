@@ -9,11 +9,11 @@ Docs. This is for local testing purposes only.
 #}
 
 {% block footer %}
-  {% if not READTHEDOCS %}
-    <!--
-  ~ Copyright (c) 2022.
-  ~ The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
-  -->
+{% if not READTHEDOCS %}
+<!--
+~ Copyright (c) 2022.
+~ The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
+-->
 
 <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
       <span class="rst-current-version" data-toggle="rst-current-version">
@@ -21,40 +21,40 @@ Docs. This is for local testing purposes only.
         v: latest
         <span class="fa fa-caret-down"></span>
       </span>
-      <div class="rst-other-versions">
+    <div class="rst-other-versions">
         <dl>
-          <dt>{{ _('Versions') }}</dt>
-          {% if test_versions %}
+            <dt>{{ _('Versions') }}</dt>
+            {% if test_versions %}
             {% for version in test_versions %}
             <dd><a href="#">{{ version }}</a></dd>
             {% endfor %}
-          {% else %}
+            {% else %}
             <dd><a href="#">latest</a></dd>
             <dd><a href="#">1.0</a></dd>
             <dd><a href="#">1.1</a></dd>
-          {% endif %}
+            {% endif %}
         </dl>
         <dl>
-          <dt>{{ _('Downloads') }}</dt>
-          <dd><a href="#">PDF</a></dd>
-          <dd><a href="#">ePub</a></dd>
-          <dd><a href="#">HTML</a></dd>
+            <dt>{{ _('Downloads') }}</dt>
+            <dd><a href="#">PDF</a></dd>
+            <dd><a href="#">ePub</a></dd>
+            <dd><a href="#">HTML</a></dd>
         </dl>
         <dl>
-          {# Translators: The phrase "Read the Docs" is not translated #}
-          <dt>{{ _('On Read the Docs') }}</dt>
+            {# Translators: The phrase "Read the Docs" is not translated #}
+            <dt>{{ _('On Read the Docs') }}</dt>
             <dd>
-              <a href="#">{{ _('Project Home') }}</a>
+                <a href="#">{{ _('Project Home') }}</a>
             </dd>
             <dd>
-              <a href="#">{{ _('Builds') }}</a>
+                <a href="#">{{ _('Builds') }}</a>
             </dd>
         </dl>
         <dl>
-          <dt>Debug</dt>
-          <dd><a href="#" data-toggle="rst-debug-badge">Swap badge position</a></dd>
+            <dt>Debug</dt>
+            <dd><a href="#" data-toggle="rst-debug-badge">Swap badge position</a></dd>
         </dl>
-      </div>
     </div>
-  {% endif %}
+</div>
+{% endif %}
 {% endblock %}

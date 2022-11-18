@@ -1,6 +1,5 @@
-
 import xarray as xr
-from eoian.__main__ import *
+
 from eo_io import configuration, ReadWriteData
 
 config_s3 = configuration()

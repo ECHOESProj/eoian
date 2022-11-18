@@ -12,46 +12,41 @@
 
 "Created: 08/01/2021",
 
-#  Copyright (c) 2022.
-#  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
-
+import configparser
 # Declare required Snappy modules
 import os
+from pathlib import Path
+
+import Automation.utils.handler as handler
 import numpy
-import sys
 import snappy
 from snappy import Product
 from snappy import ProductData
 from snappy import ProductIO
 from snappy import ProductUtils
-from snappy import FlagCoding
-from snappy import  WKTReader
-from snappy import jpy, GPF
-import matplotlib.pyplot as plt
-import configparser
-import Automation.utils.handler as handler
-from pathlib import Path
+from snappy import WKTReader
 
-CONFIG_PATH=str(Path(__file__).parent / "config.ini").replace("GIS_processing","Automation")
+CONFIG_PATH = str(Path(__file__).parent / "config.ini").replace("GIS_processing", "Automation")
 with open(CONFIG_PATH, 'r') as f:
     config_string = f.read()
 
 config = configparser.ConfigParser()
 config.read_string(config_string)
 
-output_path=config.get("SNAP", "Output")
-input_path=config.get("Sentinel", "Downloads")
+output_path = config.get("SNAP", "Output")
+input_path = config.get("Sentinel", "Downloads")
 
 logger = handler.initialize()
 
-def subset_dim(Output,dimfile):
+
+def subset_dim(Output, dimfile):
     try:
         # Read the outputted NDMI product from file
-        input_path = os.path.join(Output,dimfile)
+        input_path = os.path.join(Output, dimfile)
 
         product2 = ProductIO.readProduct(input_path)
 
-        #product2 = ProductIO.readProduct(ndmiProduct)
+        # product2 = ProductIO.readProduct(ndmiProduct)
 
         # Return a type object for the given, fully qualified Java type name which is the name of a Java primitive type, a Java class name, or a Java array type name.
         SubsetOp = snappy.jpy.get_type('org.esa.snap.core.gpf.common.SubsetOp')
@@ -80,12 +75,13 @@ def subset_dim(Output,dimfile):
     except Exception as e:
         logger.error(e);
 
-def raw_processing(Input,Output,dimfile):
+
+def raw_processing(Input, Output, dimfile):
     try:
         # Call the zipped folder
         product = ProductIO.readProduct(Input)
 
-        #print(list(product.getBandNames()))
+        # print(list(product.getBandNames()))
 
         # Retrieves metadata
         width = product.getSceneRasterWidth()
@@ -114,7 +110,7 @@ def raw_processing(Input,Output,dimfile):
         ProductUtils.copyGeoCoding(product, ndmiProduct)
 
         # Write the new product to file
-        output_path = os.path.join(Output,dimfile)
+        output_path = os.path.join(Output, dimfile)
 
         ndmiProduct.setProductWriter(writer)
         ndmiProduct.writeHeader(output_path)
@@ -133,21 +129,23 @@ def raw_processing(Input,Output,dimfile):
         # Close the product
         ndmiProduct.closeIO()
 
-        sub_product = subset_dim(Output,dimfile)
+        sub_product = subset_dim(Output, dimfile)
     except Exception as e:
         logger.error(e);
 
-def main(input_file):
 
+def main(input_file):
     Input = input_file
     Output = output_path
     dimfile = 'snappy_ndmi_output.dim'
 
-    raw_processing(Input,Output,dimfile)
+    raw_processing(Input, Output, dimfile)
 
     print("ran")
+
+
 if __name__ == "__main__":
     # only run this if this is the start up script and not imported
-    input_file=r"C:\Users\ckelly.COMPASSINFORMAT\Echoes\Ireland\Sentinel-2\Repo\S2B_MSIL2A_20201106T114349_N0214_R123_T29UPU_20201106T132455.zip"
+    input_file = r"C:\Users\ckelly.COMPASSINFORMAT\Echoes\Ireland\Sentinel-2\Repo\S2B_MSIL2A_20201106T114349_N0214_R123_T29UPU_20201106T132455.zip"
     main(input_file)
-    print ("Done!")
+    print("Done!")

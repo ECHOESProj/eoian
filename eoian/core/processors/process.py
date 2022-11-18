@@ -1,13 +1,10 @@
-#  Copyright (c) 2022.
-#  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
-
 """
 Get processing module
 """
 
 import importlib
-from typing import Union, Any, Callable
 from types import ModuleType
+from typing import Union, Any, Callable
 
 
 class Processor:

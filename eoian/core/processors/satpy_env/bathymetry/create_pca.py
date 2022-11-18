@@ -1,10 +1,3 @@
-#  Copyright (c) 2022.
-#  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
-
-import pickle
-
-import xarray as xr
-from sklearn.decomposition import IncrementalPCA
 from .spectra_decomp import *
 
 
@@ -29,7 +22,6 @@ class Components:
 
 
 def main(input_file: str, area_wkt: str) -> "Dataset":
-
     ds = get_data(input_file)
     ds_roll = get_rolling(ds, sub_size)
     specs = get_specs(ds_roll, sub_size)

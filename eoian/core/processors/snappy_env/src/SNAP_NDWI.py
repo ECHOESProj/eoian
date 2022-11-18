@@ -12,19 +12,13 @@
 
 "Created: 08/01/2021",
 
-#  Copyright (c) 2022.
-#  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
-
-import matplotlib.pyplot as plt
-import numpy
 # Declare required Snappy modules
 import os
+
+import numpy
 import snappy
-import sys
 # import configparser
 # import Automation.utils.handler as handler
-from pathlib import Path
-from snappy import FlagCoding
 from snappy import Product
 from snappy import ProductData
 from snappy import ProductIO
@@ -169,7 +163,6 @@ def raw_processing(Input, Output, dimfile):
 
 
 def main(input_file, output_path):
-
     raw_processing(input_file, output_path, dimfile)
 
     print("ran")

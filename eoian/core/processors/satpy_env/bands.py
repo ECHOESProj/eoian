@@ -1,11 +1,9 @@
-#  Copyright (c) 2022.
-#  The ECHOES Project (https://echoesproj.eu/) / Compass Informatics
-
 from os.path import dirname
+
 from satpy import Scene, find_files_and_readers, dataset
 from shapely import wkt
 
-from .utils import  get_bounds, area_def
+from .utils import get_bounds, area_def
 
 
 def main(input_file: str, area_wkt: str) -> dataset:
